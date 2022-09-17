@@ -1,0 +1,32 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types: [ "published" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build and push Asterisk image
+      uses: macbre/push-to-ghcr@master
+      with:
+        image_name: "aguglie/VoIP-E2E-Test/asterisk"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: "./asterisk/Dockerfile"
+        
+    - name: Build and push e2e-test image
+      uses: macbre/push-to-ghcr@master
+      with:
+        image_name: "aguglie/VoIP-E2E-Test/e2e-test"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: "./e2e-test/Dockerfile"
