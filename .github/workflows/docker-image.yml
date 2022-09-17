@@ -20,6 +20,7 @@ jobs:
         with:
           image_name: "aguglie/voip-e2e-test/asterisk"
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: "./asterisk/Dockerfile"
           context: "./asterisk"
 
   build-e2e-test:
@@ -32,4 +33,5 @@ jobs:
         with:
           image_name: "aguglie/voip-e2e-test/e2e-test"
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: "./e2e-test/Dockerfile"
           context: "./e2e-test"
