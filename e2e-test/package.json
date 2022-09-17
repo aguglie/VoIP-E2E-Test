@@ -1,7 +1,6 @@
 {
-  "name": "outgoing-calls-service",
+  "name": "voip-e2e-test",
   "version": "1.0.0",
-  "description": "npm init",
   "main": "app.js",
   "scripts": {
     "test": "npm run lint && npm run unit",

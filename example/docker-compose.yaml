@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  e2e-test:
+    container_name: e2e-test
+    image: ghcr.io/aguglie/voip-e2e-test/e2e-test:1.0.0
+    environment:
+      # E2E test configuration
+      - CRON_EXPRESSION=* * * * *
+      - NUMBER_TO_CALL=1234567890
+      - MAX_CALL_DURATION=60
+      - ASSERT_MIN_CALL_DURATION=15
+      - ASSERT_MIN_RTP_PACKETS_RECEIVED=400
+
+      # Optional
+      - SUCCESS_WEBHOOK_URL=https://some.website?result=OK
+      - SUCCESS_WEBHOOK_URL_METHOD=GET
+
+      # Optional
+      - FAILURE_WEBHOOK_URL=https://some.website?result=KO
+      - FAILURE_WEBHOOK_URL_METHOD=GET
+
+      # Asterisk configuration, leave untouched if you are using the docker-compose instance
+      - ASTERISK_HOST=asterisk
+      - ASTERISK_PORT=5038
+      - AMI_USER=service-account
+      - AMI_PASSWORD=secret
+
+  asterisk:
+    container_name: asterisk
+    image: ghcr.io/aguglie/voip-e2e-test/asterisk:1.0.0
+    volumes:
+      - ./sip.conf:/etc/asterisk/sip.conf
